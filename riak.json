@@ -14,11 +14,11 @@
       "access_key": "{{ user `aws_access_key` }}",
       "secret_key": "{{ user `aws_secret_key` }}",
       "region": "us-east-1",
-      "source_ami": "ami-2b594f41",
+      "source_ami": "ami-b73b63a0",
       "instance_type": "m4.large",
-      "ssh_username": "ubuntu",
+      "ssh_username": "ec2-user",
       "ami_name": "riak-{{ user `riak_version` }} {{ timestamp }}",
-      "ami_description": "Riak {{ user `riak_version` }} on Ubuntu 14.04 LTS HVM",
+      "ami_description": "Riak {{ user `riak_version` }} on Amazon Linux 2016.09.0 HVM",
       "ami_regions": [
         "us-east-1"
       ],
@@ -46,8 +46,8 @@
       "tags": {
         "Version": "{{ user `version` }}",
         "Riak_Version": "{{ user `riak_version` }}",
-        "OS_Version": "Ubuntu",
-        "OS_Release": "14.04",
+        "OS_Version": "Amazon Linux",
+        "OS_Release": "2016.09.0",
         "Created_At": "{{ isotime \"2006-01-02\" }}",
         "Created_By": "{{ user `user` }}"
       }
@@ -58,9 +58,8 @@
       "type": "shell",
       "inline": [
         "while [ ! -f /var/lib/cloud/instance/boot-finished ]; do echo 'Waiting for cloud-init...'; sleep 1; done",
-        "sudo apt-get update",
-        "sudo apt-get install -y python-dev python-pip libffi-dev libssl-dev",
-        "sudo pip install -U pip",
+        "sudo yum update",
+        "sudo yum install -y python27-devel python27-pip libffi-devel openssl-devel gcc pygpgme yum-utils awslogs",
         "sudo pip install -U ansible"
       ]
     },
