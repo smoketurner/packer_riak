@@ -3,6 +3,7 @@
 
 - name: Add basho_riak yum repository
   yum_repository: name=basho_riak
+                  description=basho_riak
                   file=basho_riak
                   baseurl=https://packagecloud.io/basho/riak/el/6/$basearch
                   repo_gpgcheck=yes
@@ -14,6 +15,7 @@
 
 - name: Add basho_riak-source yum repository
   yum_repository: name=basho_riak-source
+                  description=basho_riak-source
                   file=basho_riak
                   baseurl=https://packagecloud.io/basho/riak/el/6/SRPMS
                   repo_gpgcheck=yes
@@ -25,6 +27,9 @@
 
 - name: Install Riak
   yum: name=riak state=present update_cache=yes
+
+- name: Ensure Riak is stopped
+  service: name=riak state=stopped enabled=no
 
 - name: Copy riak.conf into place
   copy: src=etc_riak_riak.conf
@@ -91,6 +96,3 @@
         job="/usr/local/bin/riak_startup.sh"
         special_time="reboot"
         state=present
-
-- name: Ensure Riak is enabled
-  service: name=riak state=stopped enabled=yes

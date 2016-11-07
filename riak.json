@@ -27,7 +27,7 @@
       "associate_public_ip_address": true,
       "ami_block_device_mappings": [
         {
-          "device_name": "/dev/sda1",
+          "device_name": "/dev/xvda",
           "volume_type": "gp2",
           "volume_size": 20,
           "delete_on_termination": true
@@ -35,7 +35,7 @@
       ],
       "launch_block_device_mappings": [
         {
-          "device_name": "/dev/sda1",
+          "device_name": "/dev/xvda",
           "volume_type": "gp2",
           "volume_size": 20,
           "delete_on_termination": true
@@ -44,13 +44,16 @@
       "vpc_id": "{{ user `aws_vpc_id` }}",
       "subnet_id": "{{ user `aws_subnet_id` }}",
       "tags": {
+        "Name": "riak-{{ user `riak_version` }}",
         "Version": "{{ user `version` }}",
         "Riak_Version": "{{ user `riak_version` }}",
         "OS_Version": "Amazon Linux",
         "OS_Release": "2016.09.0",
         "Created_At": "{{ isotime \"2006-01-02\" }}",
         "Created_By": "{{ user `user` }}"
-      }
+      },
+      "force_deregister": true,
+      "shutdown_behaviour": "terminate"
     }
   ],
   "provisioners": [
@@ -59,7 +62,7 @@
       "inline": [
         "while [ ! -f /var/lib/cloud/instance/boot-finished ]; do echo 'Waiting for cloud-init...'; sleep 1; done",
         "sudo yum update",
-        "sudo yum install -y python27-devel python27-pip libffi-devel openssl-devel gcc pygpgme yum-utils awslogs",
+        "sudo yum install -y python27-devel python27-pip libffi-devel openssl-devel gcc",
         "sudo pip install -U ansible"
       ]
     },

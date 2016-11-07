@@ -1,0 +1,8 @@
+---
+# Defines tasks applicable for NTP
+
+- name: Install ntp
+  yum: name=ntp state=latest
+
+- name: Ensure ntpd is running and enabled
+  service: name=ntpd state=started enabled=yes

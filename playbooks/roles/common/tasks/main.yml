@@ -1,0 +1,13 @@
+---
+
+- name: Install dependent packages
+  yum: name={{ item }} state=latest
+  with_items:
+    - pygpgme
+    - yum-utils
+    - jq
+    - wget
+    - htop
+
+- include: ntp.yml
+  tags: ntp
