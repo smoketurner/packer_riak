@@ -2,7 +2,7 @@
 # Installs CloudWatch Logs Agent
 
 - name: Install awslogs
-  yum: name=awslogs state=latest
+  yum: name=awslogs state=present
 
-- name: Ensure awslogs is running and enabled
-  service: name=awslogs state=started enabled=yes
+- name: Ensure awslogs is stopped and enabled
+  service: name=awslogs state=stopped enabled=yes

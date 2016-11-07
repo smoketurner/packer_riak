@@ -1,7 +1,7 @@
 ---
 
 - name: Install dependent packages
-  yum: name={{ item }} state=latest
+  yum: name={{ item }} state=present
   with_items:
     - pygpgme
     - yum-utils
