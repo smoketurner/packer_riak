@@ -18,7 +18,7 @@ echo "Discovered EC2 region: ${EC2_REGION}"
 sed -i.bak "s/us-east-1/${EC2_REGION}/" /root/.aws/config
 
 echo "Stopping Riak..."
-service riak hardstop
+service riak hardstop || true
 
 echo "Bringing down riak@127.0.0.1..."
 riak-admin down riak@127.0.0.1 || true
