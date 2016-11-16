@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -eu -o pipefail
+set -xeuo pipefail
 
 grep -Fq "riak@127.0.0.1" /etc/riak/riak.conf
 FOUND=$?
